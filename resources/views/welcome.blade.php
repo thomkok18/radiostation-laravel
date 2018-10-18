@@ -27,7 +27,7 @@
                                 <th><a href="/programma/{{$programma->id}}">{{$programma->naam}}</a></th>
                                 <th>{{$programma->starttijd}}</th>
                                 <th>{{$programma->eindtijd}}</th>
-                                <th><a class="edit" href="/beheerder/gebruiker/edit/{{$programma->id}}">✎</a></th>
+                                <th><a class="edit" href="/edit/programma/{{$programma->id}}">✎</a></th>
                                 <th>
                                     <form action="/programma/destroy/{{$programma->id}}" method="POST">
                                         @csrf

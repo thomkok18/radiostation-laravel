@@ -29,11 +29,11 @@
                                         <th>{{$liedje->liedjenaam}}</th>
                                         <th>{{$liedje->artiestnaam}}</th>
                                         <th>{{$liedje->lengte}}</th>
-                                        <th><a class="edit" href="/beheerder/gebruiker/edit/{{$programma->id}}">✎</a></th>
+                                        <th><a class="edit" href="/edit/liedje/{{$liedje->id}}">✎</a></th>
                                         <th>
                                             <form action="/programma/destroy/{{$programma->id}}" method="POST">
                                                 @csrf
-                                                {{method_field('DELETE')}}
+                                                @method('DELETE')
                                                 <input class="prullenbak" type="image" src="/img/prullenbak/prullenbakOpen.jpg">
                                             </form>
                                         </th>

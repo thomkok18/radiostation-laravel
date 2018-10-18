@@ -27,6 +27,10 @@ Route::get('/admin', 'AdminController@index')->name('admin');
 
 Route::get('/programma', 'ProgrammaController@index')->name('programma');
 Route::post('/store/programma', 'ProgrammaController@store');
+Route::get('/edit/programma/{id}', 'ProgrammaController@edit');
+Route::put('/update/programma/{programma}', 'ProgrammaController@update');
 
 Route::get('/liedjes', 'LiedjesController@index')->name('liedje');
 Route::post('/store/liedje', 'LiedjesController@store');
+Route::get('/edit/liedje/{id}', 'LiedjesController@edit');
+Route::put('/update/liedje/{liedje}', 'LiedjesController@update');

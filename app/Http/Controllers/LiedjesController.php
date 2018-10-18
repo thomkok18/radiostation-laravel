@@ -73,19 +73,33 @@ class LiedjesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $liedje = Liedje::find($id);
+        $programmas = Programma::all();
+        return view('edit/liedje')->with(compact('liedje', 'programmas'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param Liedje $liedje
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Liedje $liedje)
     {
-        //
+        request()->validate([
+            'artiestnaam' => 'required',
+            'liedjenaam' => 'required',
+            'lengte' => 'required'
+        ]);
+
+        $liedje->update([
+            'artiestnaam' => request('artiestnaam'),
+            'liedjenaam' => request('liedjenaam'),
+            'lengte' => request('lengte')
+        ]);
+
+        return redirect('/')->with('success', 'Liedje aangepast');
     }
 
     /**

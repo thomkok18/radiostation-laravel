@@ -74,19 +74,34 @@ class ProgrammaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $programma = Programma::find($id);
+        return view('edit/programma')->with(compact('programma'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param Programma $programma
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Programma $programma)
     {
-        //
+        request()->validate([
+            'naam' => 'required',
+            'starttijd' => 'required',
+            'eindtijd' => 'required',
+            'datum' => 'required'
+        ]);
+
+        $programma->update([
+            'naam' => request('naam'),
+            'starttijd' => request('starttijd'),
+            'eindtijd' => request('eindtijd'),
+            'datum' => request('datum'),
+        ]);
+
+        return redirect('/')->with('success', 'Programma aangepast');
     }
 
     /**
