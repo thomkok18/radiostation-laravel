@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Liedje;
+use App\Programma;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +25,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('welcome');
+        $programmas = Programma::paginate(10);
+        $liedjes = Liedje::paginate(10);
+        return view('welcome', compact('programmas', 'liedjes'));
     }
 }

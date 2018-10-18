@@ -21,6 +21,12 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('/programma/{id}', 'ProgrammaController@show');
+
 Route::get('/admin', 'AdminController@index')->name('admin');
+
 Route::get('/programma', 'ProgrammaController@index')->name('programma');
+Route::post('/store/programma', 'ProgrammaController@store');
+
 Route::get('/liedjes', 'LiedjesController@index')->name('liedje');
+Route::post('/store/liedje', 'LiedjesController@store');

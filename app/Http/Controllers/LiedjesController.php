@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Liedje;
+use App\Programma;
 use Illuminate\Http\Request;
 
 class LiedjesController extends Controller
@@ -13,7 +15,8 @@ class LiedjesController extends Controller
      */
     public function index()
     {
-        return view('pages/liedje');
+        $programmas = Programma::all();
+        return view('pages/liedje', compact('programmas'));
     }
 
     /**
@@ -29,12 +32,26 @@ class LiedjesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Liedje $liedje
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Liedje $liedje)
     {
-        //
+        request()->validate([
+            'programma_id' => 'required',
+            'artiestnaam' => 'required',
+            'liedjenaam' => 'required',
+            'lengte' => 'required'
+        ]);
+
+        $liedje->create([
+            'programma_id' => request('programma_id'),
+            'artiestnaam' => request('artiestnaam'),
+            'liedjenaam' => request('liedjenaam'),
+            'lengte' => request('lengte')
+        ]);
+
+        return redirect('/')->with('success', 'Liedje toegevoegd');
     }
 
     /**

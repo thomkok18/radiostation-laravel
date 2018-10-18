@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Liedje;
+use App\Programma;
 use Illuminate\Http\Request;
 
 class ProgrammaController extends Controller
@@ -29,29 +31,45 @@ class ProgrammaController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Programma $programma
+     * @return void
      */
-    public function store(Request $request)
+    public function store(Programma $programma)
     {
-        //
+        request()->validate([
+            'naam' => 'required',
+            'starttijd' => 'required',
+            'eindtijd' => 'required',
+            'datum' => 'required'
+        ]);
+
+        $programma->create([
+            'naam' => request('naam'),
+            'starttijd' => request('starttijd'),
+            'eindtijd' => request('eindtijd'),
+            'datum' => request('datum'),
+        ]);
+
+        return redirect('/')->with('success', 'Programma aangemaakt');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
+        $programma = Programma::find($id);
+        $liedjes = Liedje::all();
+        return view('pages/liedjesoverzicht', compact('programma', 'liedjes'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -62,8 +80,8 @@ class ProgrammaController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -74,7 +92,7 @@ class ProgrammaController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
