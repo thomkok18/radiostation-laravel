@@ -15,7 +15,8 @@ class CreateLiedjesTable extends Migration
     {
         Schema::create('liedjes', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('programma_id');
+            $table->integer('programma_id')->unsigned();
+            $table->foreign('programma_id')->references('id')->on('programmas')->onDelete('cascade');
             $table->string('artiestnaam');
             $table->string('liedjenaam');
             $table->time('lengte');
