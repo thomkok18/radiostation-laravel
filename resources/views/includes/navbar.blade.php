@@ -18,6 +18,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url('/register')}}">Registreren<span class="sr-only">(current)</span></a>
+                    </li>
                 @else
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -28,9 +31,7 @@
                             @if (Auth::user()->permission_id == 0)
                                 <a id="home" class="dropdown-item" href="{{ route('admin') }}">{{ __('Admin') }}</a>
                             @elseif (Auth::user()->permission_id == 1)
-                                <a id="home" class="dropdown-item" href="{{ route('fhome') }}">{{ __('Dashboard') }}</a>
-                            @else
-                                <a id="home" class="dropdown-item" href="{{ route('ohome') }}">{{ __('Winkel') }}</a>
+                                <a id="home" class="dropdown-item" href="{{ route('home') }}">{{ __('Dashboard') }}</a>
                             @endif
 
                             <a id="logout" class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
