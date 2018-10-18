@@ -11,42 +11,42 @@
             <div id="liedjesLijst" class="card-body">
                 <input type="text" id="liedjeInput" onkeyup="zoekLiedjes()" placeholder="Zoek Liedje">
                 <br><br>
-                <table style="text-align: center;" class="table table-light">
-                    <thead>
-                    <tr>
-                        <th scope="col">Liedjenaam</th>
-                        <th scope="col">Artiestnaam</th>
-                        <th scope="col">Lengte</th>
-                        <th scope="col">Wijzigen</th>
-                        <th scope="col">Verwijderen</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @if (count($liedjes))
-                            @foreach($liedjes as $liedje)
-                                @if($liedje->programma_id == $programma->id)
-                                    <tr class="programma">
-                                        <th>{{$liedje->liedjenaam}}</th>
-                                        <th>{{$liedje->artiestnaam}}</th>
-                                        <th>{{$liedje->lengte}}</th>
-                                        <th><a class="edit" href="/edit/liedje/{{$liedje->id}}">✎</a></th>
-                                        <th>
-                                            <form action="/programma/destroy/{{$programma->id}}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <input class="prullenbak" type="image" src="/img/prullenbak/prullenbakOpen.jpg">
-                                            </form>
-                                        </th>
-                                    </tr>
-                                @endif
-                            @endforeach
-                    @else
-                        <div>
-                            Er zijn geen programma's gevonden.
-                        </div>
-                    @endif
-                    </tbody>
-                </table>
+                @if ($programma->getLiedjesById(request('id')) > 0)
+                    <table style="text-align: center;" class="table table-light">
+                        <thead>
+                        <tr>
+                            <th scope="col">Liedjenaam</th>
+                            <th scope="col">Artiestnaam</th>
+                            <th scope="col">Lengte</th>
+                            <th scope="col">Wijzigen</th>
+                            <th scope="col">Verwijderen</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($liedjes as $liedje)
+                            @if($liedje->programma_id == $programma->id)
+                                <tr class="programma">
+                                    <th>{{$liedje->liedjenaam}}</th>
+                                    <th>{{$liedje->artiestnaam}}</th>
+                                    <th>{{$liedje->lengte}}</th>
+                                    <th><a class="edit" href="/edit/liedje/{{$liedje->id}}">✎</a></th>
+                                    <th>
+                                        <form action="/delete/liedje/{{$liedje->id}}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <input class="prullenbak" type="image" src="/img/prullenbak/prullenbakOpen.jpg">
+                                        </form>
+                                    </th>
+                                </tr>
+                            @endif
+                        @endforeach
+                        </tbody>
+                    </table>
+                @else
+                    <div>
+                        Er zijn geen programma's gevonden.
+                    </div>
+                @endif
             </div>
         </div>
     </div>

@@ -10,18 +10,19 @@
             <div id="programmaLijst" class="card-body">
                 <input type="text" id="programmaInput" onkeyup="zoekProgramma()" placeholder="Zoek Programma">
                 <br><br>
-                <table style="text-align: center;" class="table table-light">
-                    <thead>
-                    <tr>
-                        <th scope="col">Programma</th>
-                        <th scope="col">Starttijd</th>
-                        <th scope="col">Eindtijd</th>
-                        <th scope="col">Wijzigen</th>
-                        <th scope="col">Verwijderen</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @if (count($programmas))
+                @if (count($programmas))
+                    <table style="text-align: center;" class="table table-light">
+                        <thead>
+                        <tr>
+                            <th scope="col">Programma</th>
+                            <th scope="col">Starttijd</th>
+                            <th scope="col">Eindtijd</th>
+                            <th scope="col">Wijzigen</th>
+                            <th scope="col">Verwijderen</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
                         @foreach($programmas as $programma)
                             <tr class="programma">
                                 <th><a href="/programma/{{$programma->id}}">{{$programma->naam}}</a></th>
@@ -29,21 +30,21 @@
                                 <th>{{$programma->eindtijd}}</th>
                                 <th><a class="edit" href="/edit/programma/{{$programma->id}}">✎</a></th>
                                 <th>
-                                    <form action="/programma/destroy/{{$programma->id}}" method="POST">
+                                    <form action="/delete/programma/{{$programma->id}}" method="POST">
                                         @csrf
-                                        {{method_field('DELETE')}}
+                                        @method('DELETE')
                                         <input class="prullenbak" type="image" src="/img/prullenbak/prullenbakOpen.jpg">
                                     </form>
                                 </th>
                             </tr>
                         @endforeach
-                    @else
-                        <div>
-                            Er zijn geen programma's gevonden.
-                        </div>
-                    @endif
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                @else
+                    <div>
+                        Er zijn geen programma's gevonden.
+                    </div>
+                @endif
             </div>
         </div>
     </div>

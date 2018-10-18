@@ -110,6 +110,8 @@ class LiedjesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $liedje = Liedje::find($id);
+        $liedje->delete();
+        return back()->with('success', 'Liedje verwijderd');
     }
 }

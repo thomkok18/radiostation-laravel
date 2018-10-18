@@ -112,6 +112,8 @@ class ProgrammaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $programma = Programma::find($id);
+        $programma->delete();
+        return back()->with('success', 'Programma verwijderd');
     }
 }

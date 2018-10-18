@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Programma extends Model
 {
@@ -11,5 +12,11 @@ class Programma extends Model
     public function liedje()
     {
         return $this->belongsTo(Liedje::class);
+    }
+
+    public function getLiedjesById($id)
+    {
+        $count = DB::table('liedjes')->where('programma_id', $id)->count();
+        return $count;
     }
 }
