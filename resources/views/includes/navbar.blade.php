@@ -10,21 +10,15 @@
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
                 @auth
-                    @if (Auth::user()->permission_id == 0)
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('admin') }}">{{ __('Admin') }}</a>
-                        </li>
-                    @elseif (Auth::user()->permission_id == 1)
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('home') }}">{{ __('Home') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('programma') }}">{{ __('Programma') }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('liedje') }}">{{ __('Liedje') }}</a>
-                        </li>
-                    @endif
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('home') }}">{{ __('Home') }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('programma') }}">{{ __('Programma') }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('liedje') }}">{{ __('Liedje') }}</a>
+                    </li>
                 @endauth
             </ul>
 
