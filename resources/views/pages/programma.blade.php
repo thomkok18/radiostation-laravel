@@ -2,6 +2,7 @@
 @section('content')
     <br>
     <div class="container">
+        <a href="/" class="btn btn-secondary">← Ga terug</a><br><br>
         <div class="card">
             <div class="card-header">
                <h3 style="margin-bottom: 0;">Programma</h3>

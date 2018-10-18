@@ -10,23 +10,31 @@
             <div id="programmaLijst" class="card-body">
                 <input type="text" id="programmaInput" onkeyup="zoekProgramma()" placeholder="Zoek Programma">
                 <br><br>
-                <table class="table table-light">
+                <table style="text-align: center;" class="table table-light">
                     <thead>
                     <tr>
-                        <th scope="col">#</th>
                         <th scope="col">Programma</th>
                         <th scope="col">Starttijd</th>
                         <th scope="col">Eindtijd</th>
+                        <th scope="col">Wijzigen</th>
+                        <th scope="col">Verwijderen</th>
                     </tr>
                     </thead>
                     <tbody>
                     @if (count($programmas))
                         @foreach($programmas as $programma)
                             <tr class="programma">
-                                <th>{{$programma->id}}</th>
                                 <th><a href="/programma/{{$programma->id}}">{{$programma->naam}}</a></th>
                                 <th>{{$programma->starttijd}}</th>
                                 <th>{{$programma->eindtijd}}</th>
+                                <th><a class="edit" href="/beheerder/gebruiker/edit/{{$programma->id}}">✎</a></th>
+                                <th>
+                                    <form action="/programma/destroy/{{$programma->id}}" method="POST">
+                                        @csrf
+                                        {{method_field('DELETE')}}
+                                        <input class="prullenbak" type="image" src="/img/prullenbak/prullenbakOpen.jpg">
+                                    </form>
+                                </th>
                             </tr>
                         @endforeach
                     @else

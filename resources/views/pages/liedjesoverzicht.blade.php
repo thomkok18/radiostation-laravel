@@ -3,6 +3,7 @@
     <link rel="stylesheet" href="{{ asset('css/liedjesoverzicht.css') }}">
     <br>
     <div class="container">
+        <a href="/" class="btn btn-secondary">← Ga terug</a><br><br>
         <div class="card">
             <div class="card-header">
                 <h3 style="margin-bottom: 0;">{{$programma->naam}}</h3>
@@ -10,25 +11,35 @@
             <div id="liedjesLijst" class="card-body">
                 <input type="text" id="liedjeInput" onkeyup="zoekLiedjes()" placeholder="Zoek Liedje">
                 <br><br>
-                <table class="table table-light">
+                <table style="text-align: center;" class="table table-light">
                     <thead>
                     <tr>
-                        <th scope="col">#</th>
                         <th scope="col">Liedjenaam</th>
                         <th scope="col">Artiestnaam</th>
                         <th scope="col">Lengte</th>
+                        <th scope="col">Wijzigen</th>
+                        <th scope="col">Verwijderen</th>
                     </tr>
                     </thead>
                     <tbody>
                     @if (count($liedjes))
-                        @foreach($liedjes as $liedje)
-                            <tr class="programma">
-                                <th>{{$liedje->id}}</th>
-                                <th>{{$liedje->liedjenaam}}</th>
-                                <th>{{$liedje->artiestnaam}}</th>
-                                <th>{{$liedje->lengte}}</th>
-                            </tr>
-                        @endforeach
+                            @foreach($liedjes as $liedje)
+                                @if($liedje->programma_id == $programma->id)
+                                    <tr class="programma">
+                                        <th>{{$liedje->liedjenaam}}</th>
+                                        <th>{{$liedje->artiestnaam}}</th>
+                                        <th>{{$liedje->lengte}}</th>
+                                        <th><a class="edit" href="/beheerder/gebruiker/edit/{{$programma->id}}">✎</a></th>
+                                        <th>
+                                            <form action="/programma/destroy/{{$programma->id}}" method="POST">
+                                                @csrf
+                                                {{method_field('DELETE')}}
+                                                <input class="prullenbak" type="image" src="/img/prullenbak/prullenbakOpen.jpg">
+                                            </form>
+                                        </th>
+                                    </tr>
+                                @endif
+                            @endforeach
                     @else
                         <div>
                             Er zijn geen programma's gevonden.

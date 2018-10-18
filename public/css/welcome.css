@@ -8,3 +8,21 @@
     padding: 6px 20px 6px 40px; /* Add some padding */
     border: 1px solid #ddd; /* Add a grey border */
 }
+
+.prullenbak {
+    height: 19px;
+    width: 19px;
+    margin-top:10px;
+}
+
+.edit {
+    color: black;
+    cursor: pointer;
+    font-size: 22px;
+    font-weight: bold;
+    text-decoration: none !important;
+}
+
+.edit:hover {
+    color: black;
+}
