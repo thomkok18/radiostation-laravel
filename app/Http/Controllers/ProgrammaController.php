@@ -40,7 +40,7 @@ class ProgrammaController extends Controller
             'naam' => 'required',
             'starttijd' => 'required|before_or_equal:eindtijd',
             'eindtijd' => 'required|after_or_equal:starttijd',
-            'datum' => 'required|after:yesterday'
+            'datum' => 'required|date'
         ]);
 
         $programma->create([
@@ -96,7 +96,7 @@ class ProgrammaController extends Controller
             'naam' => 'required',
             'starttijd' => 'required|before_or_equal:eindtijd',
             'eindtijd' => 'required|after_or_equal:starttijd',
-            'datum' => 'required|after:yesterday'
+            'datum' => 'required|date'
         ]);
 
         $programma->update([

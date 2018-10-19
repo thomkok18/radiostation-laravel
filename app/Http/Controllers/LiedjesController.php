@@ -112,7 +112,7 @@ class LiedjesController extends Controller
                 'lengte' => request('lengte')
             ]);
 
-            return redirect('/')->with('success', 'Liedje aangepast');
+            return redirect('/programma/'.$programma->id)->with('success', 'Liedje aangepast');
         } else {
             abort('403');
         }
