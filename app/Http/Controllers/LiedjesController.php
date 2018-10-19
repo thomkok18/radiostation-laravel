@@ -35,30 +35,36 @@ class LiedjesController extends Controller
      * @param Liedje $liedje
      * @return \Illuminate\Http\Response
      */
-    public function store(Liedje $liedje)
+    public function store()
     {
-        request()->validate([
-            'programma_id' => 'required',
-            'artiestnaam' => 'required',
-            'liedjenaam' => 'required',
-            'lengte' => 'required'
-        ]);
+        $programma = Programma::find(request('programma_id'));
+        if ($programma->user_id == auth()->user()->id) {
 
-        $liedje->create([
-            'programma_id' => request('programma_id'),
-            'user_id' => auth()->user()->id,
-            'artiestnaam' => request('artiestnaam'),
-            'liedjenaam' => request('liedjenaam'),
-            'lengte' => request('lengte')
-        ]);
+            request()->validate([
+                'programma_id' => 'required',
+                'artiestnaam' => 'required',
+                'liedjenaam' => 'required',
+                'lengte' => 'required'
+            ]);
 
-        return redirect('/')->with('success', 'Liedje toegevoegd');
+            Liedje::create([
+                'programma_id' => request('programma_id'),
+                'user_id' => auth()->user()->id,
+                'artiestnaam' => request('artiestnaam'),
+                'liedjenaam' => request('liedjenaam'),
+                'lengte' => request('lengte')
+            ]);
+
+            return redirect('/')->with('success', 'Liedje toegevoegd');
+        } else {
+            abort('403');
+        }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -69,7 +75,7 @@ class LiedjesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -92,25 +98,30 @@ class LiedjesController extends Controller
      */
     public function update(Liedje $liedje)
     {
-        request()->validate([
-            'artiestnaam' => 'required',
-            'liedjenaam' => 'required',
-            'lengte' => 'required'
-        ]);
+        $programma = Programma::find(request('programma_id'));
+        if ($programma->user_id == auth()->user()->id) {
+            request()->validate([
+                'artiestnaam' => 'required',
+                'liedjenaam' => 'required',
+                'lengte' => 'required'
+            ]);
 
-        $liedje->update([
-            'artiestnaam' => request('artiestnaam'),
-            'liedjenaam' => request('liedjenaam'),
-            'lengte' => request('lengte')
-        ]);
+            $liedje->update([
+                'artiestnaam' => request('artiestnaam'),
+                'liedjenaam' => request('liedjenaam'),
+                'lengte' => request('lengte')
+            ]);
 
-        return redirect('/')->with('success', 'Liedje aangepast');
+            return redirect('/')->with('success', 'Liedje aangepast');
+        } else {
+            abort('403');
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

@@ -38,9 +38,9 @@ class ProgrammaController extends Controller
     {
         request()->validate([
             'naam' => 'required',
-            'starttijd' => 'required',
-            'eindtijd' => 'required',
-            'datum' => 'required'
+            'starttijd' => 'required|before_or_equal:eindtijd',
+            'eindtijd' => 'required|after_or_equal:starttijd',
+            'datum' => 'required|after:yesterday'
         ]);
 
         $programma->create([
@@ -94,9 +94,9 @@ class ProgrammaController extends Controller
     {
         request()->validate([
             'naam' => 'required',
-            'starttijd' => 'required',
-            'eindtijd' => 'required',
-            'datum' => 'required'
+            'starttijd' => 'required|before_or_equal:eindtijd',
+            'eindtijd' => 'required|after_or_equal:starttijd',
+            'datum' => 'required|after:yesterday'
         ]);
 
         $programma->update([

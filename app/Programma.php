@@ -11,7 +11,12 @@ class Programma extends Model
 
     public function liedje()
     {
-        return $this->belongsTo(Liedje::class);
+        return $this->hasMany(Liedje::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function getLiedjesById($id)
