@@ -17,6 +17,8 @@ class CreateLiedjesTable extends Migration
             $table->increments('id');
             $table->integer('programma_id')->unsigned();
             $table->foreign('programma_id')->references('id')->on('programmas')->onDelete('cascade');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('artiestnaam');
             $table->string('liedjenaam');
             $table->time('lengte');
