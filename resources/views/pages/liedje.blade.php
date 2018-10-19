@@ -14,7 +14,9 @@
                         <label for="programma_id">Programma</label>
                         <select id="programma_id" class="form-control" name="programma_id">
                             @foreach($programmas as $programma)
-                                <option value="{{$programma->id}}">{{$programma->naam}}</option>
+                                @if(auth()->user()->id == $programma->user_id)
+                                    <option value="{{$programma->id}}">{{$programma->naam}}</option>
+                                @endif
                             @endforeach
                         </select>
                     </div>

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class Programma extends Model
 {
-    protected $fillable = ['programma_id', 'naam', 'starttijd', 'eindtijd', 'datum'];
+    protected $fillable = ['user_id', 'naam', 'starttijd', 'eindtijd', 'datum'];
 
     public function liedje()
     {

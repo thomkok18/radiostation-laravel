@@ -46,6 +46,7 @@ class LiedjesController extends Controller
 
         $liedje->create([
             'programma_id' => request('programma_id'),
+            'user_id' => auth()->user()->id,
             'artiestnaam' => request('artiestnaam'),
             'liedjenaam' => request('liedjenaam'),
             'lengte' => request('lengte')
@@ -75,7 +76,11 @@ class LiedjesController extends Controller
     {
         $liedje = Liedje::find($id);
         $programmas = Programma::all();
-        return view('edit/liedje')->with(compact('liedje', 'programmas'));
+        if (auth()->user()->id == $liedje->user_id) {
+            return view('edit/liedje')->with(compact('liedje', 'programmas'));
+        } else {
+            abort('403');
+        }
     }
 
     /**
@@ -111,7 +116,11 @@ class LiedjesController extends Controller
     public function destroy($id)
     {
         $liedje = Liedje::find($id);
-        $liedje->delete();
-        return back()->with('success', 'Liedje verwijderd');
+        if (auth()->user()->id == $liedje->user_id) {
+            $liedje->delete();
+            return back()->with('success', 'Liedje verwijderd');
+        } else {
+            abort('403');
+        }
     }
 }

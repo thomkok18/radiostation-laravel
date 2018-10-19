@@ -44,6 +44,7 @@ class ProgrammaController extends Controller
         ]);
 
         $programma->create([
+            'user_id' => auth()->user()->id,
             'naam' => request('naam'),
             'starttijd' => request('starttijd'),
             'eindtijd' => request('eindtijd'),
@@ -75,7 +76,11 @@ class ProgrammaController extends Controller
     public function edit($id)
     {
         $programma = Programma::find($id);
-        return view('edit/programma')->with(compact('programma'));
+        if (auth()->user()->id == $programma->user_id) {
+            return view('edit/programma')->with(compact('programma'));
+        } else {
+            abort('403');
+        }
     }
 
     /**
@@ -113,7 +118,11 @@ class ProgrammaController extends Controller
     public function destroy($id)
     {
         $programma = Programma::find($id);
-        $programma->delete();
-        return back()->with('success', 'Programma verwijderd');
+        if (auth()->user()->id == $programma->user_id) {
+            $programma->delete();
+            return back()->with('success', 'Programma verwijderd');
+        } else {
+            abort('403');
+        }
     }
 }

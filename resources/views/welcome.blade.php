@@ -17,6 +17,7 @@
                             <th scope="col">Programma</th>
                             <th scope="col">Starttijd</th>
                             <th scope="col">Eindtijd</th>
+                            <th scope="col">Datum</th>
                             <th scope="col">Wijzigen</th>
                             <th scope="col">Verwijderen</th>
                         </tr>
@@ -28,6 +29,7 @@
                                 <th><a href="/programma/{{$programma->id}}">{{$programma->naam}}</a></th>
                                 <th>{{$programma->starttijd}}</th>
                                 <th>{{$programma->eindtijd}}</th>
+                                <th>{{$programma->datum}}</th>
                                 @if(auth()->user()->id == $programma->user_id)
                                     <th><a class="edit" href="/edit/programma/{{$programma->id}}">✎</a></th>
                                     <th>
