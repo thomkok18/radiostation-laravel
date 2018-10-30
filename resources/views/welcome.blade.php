@@ -30,16 +30,18 @@
                                 <th>{{$programma->starttijd}}</th>
                                 <th>{{$programma->eindtijd}}</th>
                                 <th>{{$programma->datum}}</th>
-                                @if(auth()->user()->id == $programma->user_id)
-                                    <th><a class="edit" href="/edit/programma/{{$programma->id}}">✎</a></th>
-                                    <th>
-                                        <form action="/delete/programma/{{$programma->id}}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <input class="prullenbak" type="image" src="/img/prullenbak/prullenbakOpen.jpg">
-                                        </form>
-                                    </th>
-                                @endif
+                                @auth
+                                    @if(auth()->user()->id == $programma->user_id)
+                                        <th><a class="edit" href="/edit/programma/{{$programma->id}}">✎</a></th>
+                                        <th>
+                                            <form action="/delete/programma/{{$programma->id}}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <input class="prullenbak" type="image" src="/img/prullenbak/prullenbakOpen.jpg">
+                                            </form>
+                                        </th>
+                                    @endif
+                                @endauth
                             </tr>
                         @endforeach
                         </tbody>
