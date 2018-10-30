@@ -29,24 +29,27 @@
                                     <th>{{$liedje->liedjenaam}}</th>
                                     <th>{{$liedje->artiestnaam}}</th>
                                     <th>{{$liedje->lengte}}</th>
-                                    @if(auth()->user()->id == $liedje->user_id)
-                                        <th><a class="edit" href="/edit/liedje/{{$liedje->id}}">✎</a></th>
-                                        <th>
-                                            <form action="/delete/liedje/{{$liedje->id}}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <input class="prullenbak" type="image" src="/img/prullenbak/prullenbakOpen.jpg">
-                                            </form>
-                                        </th>
-                                    @endif
+                                    @auth
+                                        @if(auth()->user()->id == $liedje->user_id)
+                                            <th><a class="edit" href="/edit/liedje/{{$liedje->id}}">✎</a></th>
+                                            <th>
+                                                <form action="/delete/liedje/{{$liedje->id}}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <input class="prullenbak" type="image" src="/img/prullenbak/prullenbakOpen.jpg">
+                                                </form>
+                                            </th>
+                                        @endif
+                                    @endauth
                                 </tr>
                             @endif
+
                         @endforeach
                         </tbody>
                     </table>
                 @else
                     <div>
-                        Er zijn geen programma's gevonden.
+                        Er zijn geen liedjes gevonden.
                     </div>
                 @endif
             </div>
