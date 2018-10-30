@@ -34,11 +34,8 @@
                                     @if(auth()->user()->id == $programma->user_id)
                                         <th><a class="edit" href="/edit/programma/{{$programma->id}}">✎</a></th>
                                         <th>
-                                            <form action="/delete/programma/{{$programma->id}}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <input class="prullenbak" type="image" src="/img/prullenbak/prullenbakOpen.jpg">
-                                            </form>
+                                            <input class="prullenbak" type="image" src="/img/prullenbak/prullenbakOpen.jpg" program-id="{{ $programma->id }}" program-name="{{ $programma->naam }}"
+                                                   aria-hidden="true" data-toggle="modal" data-target="#destroyProgrammaModal">
                                         </th>
                                     @endif
                                 @endauth
@@ -54,7 +51,38 @@
             </div>
         </div>
     </div>
+
+    <div id="destroyProgrammaModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 id="programmaNaam" class="modal-title">Weet u zeker?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+                    <form id="deleteProgram" action="/delete/programma" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-primary">Verwijderen</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
     <script>
+        $(function () {
+            $('.prullenbak').click(function () {
+                $('#deleteProgram').attr('action', '/delete/programma/' + $(this).attr('program-id'));
+                $('#programmaNaam').val('Weet u zeker dat u ' + $(this).attr('program-name') + 'wilt verwijderen?');
+            });
+        });
+
         function zoekProgramma() {
             // Declare variables
             var input, filter, home1, group, a, i;
