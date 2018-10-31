@@ -25,7 +25,7 @@
                         <tbody>
                         @foreach($liedjes as $liedje)
                             @if($liedje->programma_id == $programma->id)
-                                <tr class="programma">
+                                <tr class="liedjes">
                                     <th>{{$liedje->liedjenaam}}</th>
                                     <th>{{$liedje->artiestnaam}}</th>
                                     <th>{{$liedje->lengte}}</th>
@@ -94,7 +94,7 @@
 
             // Loop through all list items, and hide those who don't match the search query
             for (i = 0; i < group.length; i++) {
-                a = group[i].getElementsByTagName("p")[0];
+                a = group[i].getElementsByTagName("th")[0];
                 if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
                     group[i].style.display = "";
                 } else {
