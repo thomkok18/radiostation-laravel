@@ -33,11 +33,8 @@
                                         @if(auth()->user()->id == $liedje->user_id)
                                             <th><a class="edit" href="/edit/liedje/{{$liedje->id}}">✎</a></th>
                                             <th>
-                                                <form action="/delete/liedje/{{$liedje->id}}" method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <input class="prullenbak" type="image" src="/img/prullenbak/prullenbakOpen.jpg">
-                                                </form>
+                                                <input class="prullenbak" type="image" src="/img/prullenbak/prullenbakOpen.jpg" song-id="{{ $liedje->id }}" song-name="{{ $liedje->liedjenaam }}"
+                                                       aria-hidden="true" data-toggle="modal" data-target="#destroyLiedjeModal">
                                             </th>
                                         @endif
                                     @endauth
@@ -55,7 +52,38 @@
             </div>
         </div>
     </div>
+
+    <div id="destroyLiedjeModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 id="liedjeNaam" class="modal-title">Weet u het zeker?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
+                    <form id="deleteSong" action="/delete/liedje" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-primary">Verwijderen</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
     <script>
+        $(function () {
+            $('.prullenbak').click(function () {
+                $('#deleteSong').attr('action', '/delete/liedje/' + $(this).attr('song-id'));
+                $('#liedjeNaam').text('Weet u zeker dat u ' + $(this).attr('song-name') + ' wilt verwijderen?');
+            });
+        });
+
         function zoekLiedjes() {
             // Declare variables
             var input, filter, home1, group, a, i;

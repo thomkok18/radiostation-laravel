@@ -79,7 +79,7 @@
         $(function () {
             $('.prullenbak').click(function () {
                 $('#deleteProgram').attr('action', '/delete/programma/' + $(this).attr('program-id'));
-                $('#programmaNaam').val('Weet u zeker dat u ' + $(this).attr('program-name') + 'wilt verwijderen?');
+                $('#programmaNaam').text('Weet u zeker dat u ' + $(this).attr('program-name') + ' wilt verwijderen?');
             });
         });
 
