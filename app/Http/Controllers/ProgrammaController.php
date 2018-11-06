@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Liedje;
 use App\Programma;
+use App\User;
 use Illuminate\Http\Request;
 
 class ProgrammaController extends Controller
@@ -15,7 +16,8 @@ class ProgrammaController extends Controller
      */
     public function index()
     {
-        return view('pages/programma');
+        $users = User::all();
+        return view('pages/programma', compact('users'));
     }
 
     /**
@@ -37,6 +39,7 @@ class ProgrammaController extends Controller
     public function store(Programma $programma)
     {
         request()->validate([
+            'presentator' => 'required',
             'naam' => 'required',
             'starttijd' => 'required|before_or_equal:eindtijd',
             'eindtijd' => 'required|after_or_equal:starttijd',
@@ -44,7 +47,7 @@ class ProgrammaController extends Controller
         ]);
 
         $programma->create([
-            'user_id' => auth()->user()->id,
+            'user_id' => request('presentator'),
             'naam' => request('naam'),
             'starttijd' => request('starttijd'),
             'eindtijd' => request('eindtijd'),

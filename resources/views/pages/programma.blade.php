@@ -5,11 +5,19 @@
         <a href="/" class="btn btn-secondary">← Ga terug</a><br><br>
         <div class="card">
             <div class="card-header">
-               <h3 style="margin-bottom: 0;">Programma</h3>
+                <h3 style="margin-bottom: 0;">Programma</h3>
             </div>
             <div class="card-body">
                 <form action="{{url('/store/programma')}}" method="POST">
                     @csrf
+                    <div class="form-group">
+                        <label for="presentator">Presentator</label>
+                        <select id="presentator" class="form-control" name="presentator">
+                            @foreach($users as $user)
+                                <option {{$user->id == auth()->user()->id ? 'selected' : '' }} value="{{$user->id}}">{{$user->email}}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label for="programma">Naam van programma</label>
                         <input id="programma" type="text" name="naam" class="form-control" placeholder="Naam">
