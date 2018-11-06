@@ -14,10 +14,10 @@
                         <a class="nav-link" href="{{ route('home') }}">{{ __('Home') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('programma') }}">{{ __('Programma') }}</a>
+                        <a class="nav-link" href="{{ route('programma') }}">{{ __('Programma aanmaken') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('liedje') }}">{{ __('Liedje') }}</a>
+                        <a class="nav-link" href="{{ route('liedje') }}">{{ __('Liedje aanmaken') }}</a>
                     </li>
                 @endauth
             </ul>

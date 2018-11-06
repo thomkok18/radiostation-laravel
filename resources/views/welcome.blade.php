@@ -11,8 +11,8 @@
                 <input type="text" id="programmaInput" onkeyup="zoekProgramma()" placeholder="Zoek Programma">
                 <br><br>
                 @if (count($programmas))
-                    <table style="text-align: center;" class="table table-light">
-                        <thead>
+                    <table style="text-align: center;" class="table table-striped">
+                        <thead class="thead-dark">
                         <tr>
                             <th scope="col">Programma</th>
                             <th scope="col">Starttijd</th>
@@ -37,6 +37,9 @@
                                             <input class="prullenbak" type="image" src="/img/prullenbak/prullenbakOpen.jpg" program-id="{{ $programma->id }}" program-name="{{ $programma->naam }}"
                                                    aria-hidden="true" data-toggle="modal" data-target="#destroyProgrammaModal">
                                         </th>
+                                    @else
+                                        <th></th>
+                                        <th></th>
                                     @endif
                                 @endauth
                             </tr>

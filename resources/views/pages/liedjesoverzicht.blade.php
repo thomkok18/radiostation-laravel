@@ -12,8 +12,8 @@
                 <input type="text" id="liedjeInput" onkeyup="zoekLiedjes()" placeholder="Zoek Liedje">
                 <br><br>
                 @if ($programma->getLiedjesById(request('id')) > 0)
-                    <table style="text-align: center;" class="table table-light">
-                        <thead>
+                    <table style="text-align: center;" class="table table-striped">
+                        <thead class="thead-dark">
                         <tr>
                             <th scope="col">Liedjenaam</th>
                             <th scope="col">Artiestnaam</th>
@@ -36,6 +36,9 @@
                                                 <input class="prullenbak" type="image" src="/img/prullenbak/prullenbakOpen.jpg" song-id="{{ $liedje->id }}" song-name="{{ $liedje->liedjenaam }}"
                                                        aria-hidden="true" data-toggle="modal" data-target="#destroyLiedjeModal">
                                             </th>
+                                        @else
+                                            <th></th>
+                                            <th></th>
                                         @endif
                                     @endauth
                                 </tr>
