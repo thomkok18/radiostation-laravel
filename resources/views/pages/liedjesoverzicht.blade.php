@@ -15,11 +15,13 @@
                     <table style="text-align: center;" class="table table-striped">
                         <thead class="thead-dark">
                         <tr>
-                            <th scope="col">Liedjenaam</th>
-                            <th scope="col">Artiestnaam</th>
+                            <th scope="col">Liedje</th>
+                            <th scope="col">Artiest</th>
                             <th scope="col">Lengte</th>
-                            <th scope="col">Wijzigen</th>
-                            <th scope="col">Verwijderen</th>
+                            @auth
+                                <th scope="col">Wijzigen</th>
+                                <th scope="col">Verwijderen</th>
+                            @endauth
                         </tr>
                         </thead>
                         <tbody>

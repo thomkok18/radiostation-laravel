@@ -18,8 +18,10 @@
                             <th scope="col">Starttijd</th>
                             <th scope="col">Eindtijd</th>
                             <th scope="col">Datum</th>
-                            <th scope="col">Wijzigen</th>
-                            <th scope="col">Verwijderen</th>
+                            @auth
+                                <th scope="col">Wijzigen</th>
+                                <th scope="col">Verwijderen</th>
+                            @endauth
                         </tr>
                         </thead>
                         <tbody>
