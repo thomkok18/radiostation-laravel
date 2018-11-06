@@ -12,7 +12,7 @@
                     @csrf
                     <div class="form-group">
                         <label for="programma_id">Programma</label>
-                        <select id="programma_id" class="form-control" name="programma_id">
+                        <select id="programma_id" class="form-control" name="programma">
                             @foreach($programmas as $programma)
                                 @if(auth()->user()->id == $programma->user_id)
                                     <option value="{{$programma->id}}">{{$programma->naam}}</option>

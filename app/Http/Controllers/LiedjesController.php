@@ -38,24 +38,24 @@ class LiedjesController extends Controller
     public function store()
     {
         $programma = Programma::find(request('programma_id'));
+
+        request()->validate([
+            'programma' => 'required',
+            'artiestnaam' => 'required',
+            'liedjenaam' => 'required',
+            'lengte' => 'required'
+        ]);
+
         if ($programma->user_id == auth()->user()->id) {
-
-            request()->validate([
-                'programma_id' => 'required',
-                'artiestnaam' => 'required',
-                'liedjenaam' => 'required',
-                'lengte' => 'required'
-            ]);
-
             Liedje::create([
-                'programma_id' => request('programma_id'),
+                'programma_id' => request('programma'),
                 'user_id' => auth()->user()->id,
                 'artiestnaam' => request('artiestnaam'),
                 'liedjenaam' => request('liedjenaam'),
                 'lengte' => request('lengte')
             ]);
 
-            return redirect('/programma/'.$programma->id)->with('success', 'Liedje toegevoegd');
+            return redirect('/programma/' . $programma->id)->with('success', 'Liedje toegevoegd');
         } else {
             abort('403');
         }
@@ -99,20 +99,23 @@ class LiedjesController extends Controller
     public function update(Liedje $liedje)
     {
         $programma = Programma::find(request('programma_id'));
-        if ($programma->user_id == auth()->user()->id) {
-            request()->validate([
-                'artiestnaam' => 'required',
-                'liedjenaam' => 'required',
-                'lengte' => 'required'
-            ]);
 
+        request()->validate([
+            'programma' => 'required',
+            'artiestnaam' => 'required',
+            'liedjenaam' => 'required',
+            'lengte' => 'required'
+        ]);
+
+        if ($programma->user_id == auth()->user()->id) {
             $liedje->update([
+                'programma_id' => request('programma'),
                 'artiestnaam' => request('artiestnaam'),
                 'liedjenaam' => request('liedjenaam'),
                 'lengte' => request('lengte')
             ]);
 
-            return redirect('/programma/'.$programma->id)->with('success', 'Liedje aangepast');
+            return redirect('/programma/' . $programma->id)->with('success', 'Liedje aangepast');
         } else {
             abort('403');
         }
