@@ -37,8 +37,6 @@ class LiedjesController extends Controller
      */
     public function store()
     {
-        $programma = Programma::find(request('programma_id'));
-
         request()->validate([
             'programma' => 'required',
             'artiestnaam' => 'required',
@@ -46,18 +44,24 @@ class LiedjesController extends Controller
             'lengte' => 'required'
         ]);
 
-        if ($programma->user_id == auth()->user()->id) {
-            Liedje::create([
-                'programma_id' => request('programma'),
-                'user_id' => auth()->user()->id,
-                'artiestnaam' => request('artiestnaam'),
-                'liedjenaam' => request('liedjenaam'),
-                'lengte' => request('lengte')
-            ]);
+        $programma = Programma::find(request('programma'));
 
-            return redirect('/programma/' . $programma->id)->with('success', 'Liedje toegevoegd');
+        if ($programma) {
+            if ($programma->user_id == auth()->user()->id) {
+                Liedje::create([
+                    'programma_id' => request('programma'),
+                    'user_id' => auth()->user()->id,
+                    'artiestnaam' => request('artiestnaam'),
+                    'liedjenaam' => request('liedjenaam'),
+                    'lengte' => request('lengte')
+                ]);
+
+                return redirect('/programma/' . $programma->id)->with('success', 'Liedje toegevoegd');
+            } else {
+                abort('403');
+            }
         } else {
-            abort('403');
+            return back()->with('error', 'The programma field is required.');
         }
     }
 
