@@ -9,7 +9,7 @@
                 <h3 style="margin-bottom: 0;">{{$programma->naam}}</h3>
             </div>
             <div id="liedjesLijst" class="card-body">
-                <input type="text" id="liedjeInput" onkeyup="zoekLiedjes()" placeholder="Zoek Liedje">
+                <input type="text" id="liedjeInput" onkeyup="zoekLiedjes()" placeholder="Zoeken">
                 <br><br>
                 @if ($programma->getLiedjesById(request('id')) > 0)
                     <table style="text-align: center;" class="table table-striped">
@@ -91,7 +91,7 @@
 
         function zoekLiedjes() {
             // Declare variables
-            var input, filter, home1, group, a, i;
+            var input, filter, home1, group, th0, th1, th2, i;
             input = document.getElementById('liedjeInput');
             filter = input.value.toUpperCase();
             home1 = document.getElementById("liedjesLijst");
@@ -99,9 +99,11 @@
 
             // Loop through all list items, and hide those who don't match the search query
             for (i = 0; i < group.length; i++) {
-                a = group[i].getElementsByTagName("th")[0];
-                if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                    group[i].style.display = "";
+            th0 = group[i].getElementsByTagName("th")[0].innerHTML;
+            th1 = group[i].getElementsByTagName("th")[1].innerHTML;
+            th2 = group[i].getElementsByTagName("th")[2].innerHTML;
+            if (th0.toUpperCase().indexOf(filter) > -1 || th1.toUpperCase().indexOf(filter) > -1 || th2.toUpperCase().indexOf(filter) > -1) {
+                group[i].style.display = "";
                 } else {
                     group[i].style.display = "none";
                 }
