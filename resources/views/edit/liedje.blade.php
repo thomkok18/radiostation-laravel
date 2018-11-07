@@ -16,7 +16,7 @@
                         <select id="programma_id" class="form-control" name="programma_id">
                             @foreach($programmas as $programma)
                                 @if(auth()->user()->id == $programma->user_id)
-                                    <option value="{{$programma->id}}">{{$programma->naam}}</option>
+                                    <option {{$programma->id == $liedje->programma_id ? 'selected' : '' }} value="{{$programma->id}}">{{$programma->naam}}</option>
                                 @endif
                             @endforeach
                         </select>

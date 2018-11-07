@@ -6,6 +6,7 @@ use App\Liedje;
 use App\Programma;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProgrammaController extends Controller
 {
@@ -66,7 +67,7 @@ class ProgrammaController extends Controller
     public function show($id)
     {
         $programma = Programma::find($id);
-        $liedjes = Liedje::all();
+        $liedjes = DB::table('liedjes')->where('programma_id', $id)->get();
         return view('pages/liedjesoverzicht', compact('programma', 'liedjes'));
     }
 
