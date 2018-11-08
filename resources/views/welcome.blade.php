@@ -25,10 +25,6 @@
                     </thead>
                     <tbody id="programmas">
 
-                    <th><a class="edit" href="/edit/programma/$programma->id">✎</a></th>
-                    <th>
-                        <input class="prullenbak" type="image" src="/img/prullenbak/prullenbakOpen.jpg" aria-hidden="true" data-toggle="modal" data-target="#destroyProgrammaModal">
-                    </th>
                     </tbody>
                 </table>
                 <div id="geenProgramma">
@@ -94,10 +90,13 @@
                             "<td>" + value.starttijd + "</td>" +
                             "<td>" + value.eindtijd + "</td>" +
                             "<td>" + value.datum + "</td>" +
-                            "<th><a class=\"edit\" href=\'/edit/programma/" + value.id + "\'>✎</a></th>" +
+                            @auth
+                                "<th><a class=\"edit\" href=\'/edit/programma/" + value.id + "\'>✎</a></th>" +
                             "<th>" +
                             "<input class=\"prullenbak\" type=\"image\" src=\"/img/prullenbak/prullenbakOpen.jpg\" aria-hidden=\"true\" data-toggle=\"modal\" data-target=\"#destroyProgrammaModal\">\n" +
-                            "</th></tr>");
+                            "</th>" +
+                            @endauth
+                                "</tr>");
                         document.getElementById("deleteProgram").setAttribute('action', '/delete/programma/' + value.id);
                     });
                 }

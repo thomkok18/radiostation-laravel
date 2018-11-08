@@ -11,6 +11,7 @@
 |
 */
 
+use App\Liedje;
 use App\Programma;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -42,4 +43,13 @@ Route::get('/searchPrograms/', function() {
         ->get();
 
     return $programma;
+});
+
+Route::get('/searchSongs/', function() {
+    $liedje = Liedje::where('artiestnaam', 'like', '%'.$_GET['search'].'%')
+        ->orWhere('liedjenaam', 'like', '%'.$_GET['search'].'%')
+        ->orWhere('lengte', 'like', '%'.$_GET['search'].'%')
+        ->get();
+
+    return $liedje;
 });

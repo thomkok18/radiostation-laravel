@@ -9,51 +9,27 @@
                 <h3 style="margin-bottom: 0;">{{$programma->naam}}</h3>
             </div>
             <div id="liedjesLijst" class="card-body">
-                <input type="text" id="liedjeInput" onkeyup="zoekLiedjes()" placeholder="Zoeken">
+                <input type="text" id="liedjeInput" onkeyup="searchSongs()" placeholder="Zoeken">
                 <br><br>
-                @if ($programma->getLiedjesById(request('id')) > 0)
-                    <table style="text-align: center;" class="table table-striped">
-                        <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">Liedje</th>
-                            <th scope="col">Artiest</th>
-                            <th scope="col">Lengte</th>
-                            @auth
-                                <th scope="col">Wijzigen</th>
-                                <th scope="col">Verwijderen</th>
-                            @endauth
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($liedjes as $liedje)
-                            @if($liedje->programma_id == $programma->id)
-                                <tr class="liedjes">
-                                    <th>{{$liedje->liedjenaam}}</th>
-                                    <th>{{$liedje->artiestnaam}}</th>
-                                    <th>{{$liedje->lengte}}</th>
-                                    @auth
-                                        @if(auth()->user()->id == $liedje->user_id)
-                                            <th><a class="edit" href="/edit/liedje/{{$liedje->id}}">✎</a></th>
-                                            <th>
-                                                <input class="prullenbak" type="image" src="/img/prullenbak/prullenbakOpen.jpg" song-id="{{ $liedje->id }}" song-name="{{ $liedje->liedjenaam }}"
-                                                       aria-hidden="true" data-toggle="modal" data-target="#destroyLiedjeModal">
-                                            </th>
-                                        @else
-                                            <th></th>
-                                            <th></th>
-                                        @endif
-                                    @endauth
-                                </tr>
-                            @endif
+                <table style="text-align: center;" class="table table-striped">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Liedje</th>
+                        <th scope="col">Artiest</th>
+                        <th scope="col">Lengte</th>
+                        @auth
+                            <th scope="col">Wijzigen</th>
+                            <th scope="col">Verwijderen</th>
+                        @endauth
+                    </tr>
+                    </thead>
+                    <tbody id="liedjes">
 
-                        @endforeach
-                        </tbody>
-                    </table>
-                @else
-                    <div>
-                        Er zijn geen liedjes gevonden.
-                    </div>
-                @endif
+                    </tbody>
+                </table>
+                <div id="geenLiedje">
+                    Er zijn geen liedjes gevonden.
+                </div>
             </div>
         </div>
     </div>
@@ -89,25 +65,41 @@
             });
         });
 
-        function zoekLiedjes() {
-            // Declare variables
-            var input, filter, home1, group, th0, th1, th2, i;
-            input = document.getElementById('liedjeInput');
-            filter = input.value.toUpperCase();
-            home1 = document.getElementById("liedjesLijst");
-            group = home1.getElementsByClassName('liedjes');
+        $(function () {
+            searchSongs();
+        });
 
-            // Loop through all list items, and hide those who don't match the search query
-            for (i = 0; i < group.length; i++) {
-            th0 = group[i].getElementsByTagName("th")[0].innerHTML;
-            th1 = group[i].getElementsByTagName("th")[1].innerHTML;
-            th2 = group[i].getElementsByTagName("th")[2].innerHTML;
-            if (th0.toUpperCase().indexOf(filter) > -1 || th1.toUpperCase().indexOf(filter) > -1 || th2.toUpperCase().indexOf(filter) > -1) {
-                group[i].style.display = "";
-                } else {
-                    group[i].style.display = "none";
+        function searchSongs() {
+            var search = $('#liedjeInput').val();
+
+            $.ajax({
+                url: '/searchSongs',
+                dataType: 'json',
+                type: 'GET',
+                data: {search: search},
+                success: function (data) {
+                    if (data.length > 0) {
+                        $('#geenLiedje').hide();
+                    } else {
+                        $('#geenLiedje').show();
+                    }
+
+                    $('#liedjes').html('');
+                    $.each(data, function (index, value) {
+                        $('#liedjes').append("<tr><th>" + value.liedjenaam + "</th>" +
+                            "<td>" + value.artiestnaam + "</td>" +
+                            "<td>" + value.lengte + "</td>" +
+                            @auth
+                                "<th><a class=\"edit\" href=\'/edit/liedje/" + value.id + "\'>✎</a></th>" +
+                            "<th>" +
+                            "<input class=\"prullenbak\" type=\"image\" src=\"/img/prullenbak/prullenbakOpen.jpg\" aria-hidden=\"true\" data-toggle=\"modal\" data-target=\"#destroyLiedjeModal\">\n" +
+                            "</th>" +
+                            @endauth
+                                "</tr>");
+                        document.getElementById("deleteSong").setAttribute('action', '/delete/liedje/' + value.id);
+                    });
                 }
-            }
+            });
         }
     </script>
 @endsection

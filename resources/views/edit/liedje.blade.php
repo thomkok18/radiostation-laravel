@@ -12,8 +12,8 @@
                     @csrf
                     @method('PUT')
                     <div class="form-group">
-                        <label for="programma_id">Programma</label>
-                        <select id="programma_id" class="form-control" name="programma_id">
+                        <label for="programma">Programma</label>
+                        <select id="programma" class="form-control" name="programma">
                             @foreach($programmas as $programma)
                                 @if(auth()->user()->id == $programma->user_id)
                                     <option {{$programma->id == $liedje->programma_id ? 'selected' : '' }} value="{{$programma->id}}">{{$programma->naam}}</option>

@@ -102,7 +102,7 @@ class LiedjesController extends Controller
      */
     public function update(Liedje $liedje)
     {
-        $programma = Programma::find(request('programma_id'));
+        $programma = Programma::find(request('programma'));
 
         request()->validate([
             'programma' => 'required',
@@ -110,6 +110,8 @@ class LiedjesController extends Controller
             'liedjenaam' => 'required',
             'lengte' => 'required'
         ]);
+
+
 
         if ($programma->user_id == auth()->user()->id) {
             $liedje->update([
