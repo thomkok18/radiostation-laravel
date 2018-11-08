@@ -25,8 +25,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $programmas = Programma::paginate(10);
-        $liedjes = Liedje::paginate(10);
-        return view('welcome', compact('programmas', 'liedjes'));
+        return view('welcome');
     }
 }

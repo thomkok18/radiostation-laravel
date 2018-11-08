@@ -96,12 +96,16 @@ class ProgrammaController extends Controller
      */
     public function update(Programma $programma)
     {
+        $messages = [
+            'datum.required' => 'The datum field is required.',
+        ];
+
         request()->validate([
             'naam' => 'required',
             'starttijd' => 'required|before_or_equal:eindtijd',
             'eindtijd' => 'required|after_or_equal:starttijd',
             'datum' => 'required|date'
-        ]);
+        ], $messages);
 
         $programma->update([
             'naam' => request('naam'),

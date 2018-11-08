@@ -11,6 +11,7 @@
 |
 */
 
+use App\Programma;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -32,3 +33,13 @@ Route::post('/store/liedje', 'LiedjesController@store');
 Route::get('/edit/liedje/{id}', 'LiedjesController@edit');
 Route::put('/update/liedje/{liedje}', 'LiedjesController@update');
 Route::delete('/delete/liedje/{liedje}', 'LiedjesController@destroy');
+
+Route::get('/searchPrograms/', function() {
+    $programma = Programma::where('naam', 'like', '%'.$_GET['search'].'%')
+        ->orWhere('starttijd', 'like', '%'.$_GET['search'].'%')
+        ->orWhere('eindtijd', 'like', '%'.$_GET['search'].'%')
+        ->orWhere('datum', 'like', '%'.$_GET['search'].'%')
+        ->get();
+
+    return $programma;
+});

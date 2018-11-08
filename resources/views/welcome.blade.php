@@ -8,51 +8,32 @@
                 <h3 style="margin-bottom: 0;">Programma's</h3>
             </div>
             <div id="programmaLijst" class="card-body">
-                <input type="text" id="programmaInput" onkeyup="zoekProgramma()" placeholder="Zoeken">
+                <input type="text" id="programmaInput" onkeyup="searchPrograms()" placeholder="Zoeken">
                 <br><br>
-                @if (count($programmas))
-                    <table style="text-align: center;" class="table table-striped">
-                        <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">Programma</th>
-                            <th scope="col">Starttijd</th>
-                            <th scope="col">Eindtijd</th>
-                            <th scope="col">Datum</th>
-                            @auth
-                                <th scope="col">Wijzigen</th>
-                                <th scope="col">Verwijderen</th>
-                            @endauth
-                        </tr>
-                        </thead>
-                        <tbody>
+                <table style="text-align: center;" class="table table-striped">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Programma</th>
+                        <th scope="col">Starttijd</th>
+                        <th scope="col">Eindtijd</th>
+                        <th scope="col">Datum</th>
+                        @auth
+                            <th scope="col">Wijzigen</th>
+                            <th scope="col">Verwijderen</th>
+                        @endauth
+                    </tr>
+                    </thead>
+                    <tbody id="programmas">
 
-                        @foreach($programmas as $programma)
-                            <tr class="programma">
-                                <th><a href="/programma/{{$programma->id}}">{{$programma->naam}}</a></th>
-                                <th>{{$programma->starttijd}}</th>
-                                <th>{{$programma->eindtijd}}</th>
-                                <th>{{$programma->datum}}</th>
-                                @auth
-                                    @if(auth()->user()->id == $programma->user_id)
-                                        <th><a class="edit" href="/edit/programma/{{$programma->id}}">✎</a></th>
-                                        <th>
-                                            <input class="prullenbak" type="image" src="/img/prullenbak/prullenbakOpen.jpg" program-id="{{ $programma->id }}" program-name="{{ $programma->naam }}"
-                                                   aria-hidden="true" data-toggle="modal" data-target="#destroyProgrammaModal">
-                                        </th>
-                                    @else
-                                        <th></th>
-                                        <th></th>
-                                    @endif
-                                @endauth
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                @else
-                    <div>
-                        Er zijn geen programma's gevonden.
-                    </div>
-                @endif
+                    <th><a class="edit" href="/edit/programma/$programma->id">✎</a></th>
+                    <th>
+                        <input class="prullenbak" type="image" src="/img/prullenbak/prullenbakOpen.jpg" aria-hidden="true" data-toggle="modal" data-target="#destroyProgrammaModal">
+                    </th>
+                    </tbody>
+                </table>
+                <div id="geenProgramma">
+                    Er zijn geen programma's gevonden.
+                </div>
             </div>
         </div>
     </div>
@@ -88,26 +69,39 @@
             });
         });
 
-        function zoekProgramma() {
-            // Declare variables
-            var input, filter, home1, group, th0, th1, th2, th3, i;
-            input = document.getElementById('programmaInput');
-            filter = input.value.toUpperCase();
-            home1 = document.getElementById("programmaLijst");
-            group = home1.getElementsByClassName('programma');
+        $(function () {
+            searchPrograms();
+        });
 
-            // Loop through all list items, and hide those who don't match the search query
-            for (i = 0; i < group.length; i++) {
-                th0 = group[i].getElementsByTagName("a")[0].innerHTML;
-                th1 = group[i].getElementsByTagName("th")[1].innerHTML;
-                th2 = group[i].getElementsByTagName("th")[2].innerHTML;
-                th3 = group[i].getElementsByTagName("th")[3].innerHTML;
-                if (th0.toUpperCase().indexOf(filter) > -1 || th1.toUpperCase().indexOf(filter) > -1 || th2.toUpperCase().indexOf(filter) > -1 || th3.toUpperCase().indexOf(filter) > -1) {
-                    group[i].style.display = "";
-                } else {
-                    group[i].style.display = "none";
+        function searchPrograms() {
+            var search = $('#programmaInput').val();
+
+            $.ajax({
+                url: '/searchPrograms',
+                dataType: 'json',
+                type: 'GET',
+                data: {search: search},
+                success: function (data) {
+                    if (data.length > 0) {
+                        $('#geenProgramma').hide();
+                    } else {
+                        $('#geenProgramma').show();
+                    }
+
+                    $('#programmas').html('');
+                    $.each(data, function (index, value) {
+                        $('#programmas').append("<tr><th><a href='programma/" + value.id + "'>" + value.naam + "</a></th>" +
+                            "<td>" + value.starttijd + "</td>" +
+                            "<td>" + value.eindtijd + "</td>" +
+                            "<td>" + value.datum + "</td>" +
+                            "<th><a class=\"edit\" href=\'/edit/programma/" + value.id + "\'>✎</a></th>" +
+                            "<th>" +
+                            "<input class=\"prullenbak\" type=\"image\" src=\"/img/prullenbak/prullenbakOpen.jpg\" aria-hidden=\"true\" data-toggle=\"modal\" data-target=\"#destroyProgrammaModal\">\n" +
+                            "</th></tr>");
+                        document.getElementById("deleteProgram").setAttribute('action', '/delete/programma/' + value.id);
+                    });
                 }
-            }
+            });
         }
     </script>
 @endsection
