@@ -14,6 +14,7 @@
 use App\Liedje;
 use App\Programma;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 Auth::routes();
@@ -46,9 +47,11 @@ Route::get('/searchPrograms/', function() {
 });
 
 Route::get('/searchSongs/', function() {
-    $liedje = Liedje::where('artiestnaam', 'like', '%'.$_GET['search'].'%')
-        ->orWhere('liedjenaam', 'like', '%'.$_GET['search'].'%')
-        ->orWhere('lengte', 'like', '%'.$_GET['search'].'%')
+    $liedje = DB::table('liedjes')
+        ->where('programma_id', '=', $_GET['program_id'])
+        ->orWhere('liedjenaam', 'like', $_GET['search'])
+        ->orWhere('lengte', 'like', $_GET['search'])
+        ->orWhere('artiestnaam', 'like', $_GET['search'])
         ->get();
 
     return $liedje;

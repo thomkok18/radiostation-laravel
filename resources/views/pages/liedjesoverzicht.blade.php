@@ -71,12 +71,13 @@
 
         function searchSongs() {
             var search = $('#liedjeInput').val();
+            var program_id = '<?= request('id'); ?>';
 
             $.ajax({
-                url: '/searchSongs',
+                url: "/searchSongs/",
                 dataType: 'json',
                 type: 'GET',
-                data: {search: search},
+                data: {search: search, program_id: program_id},
                 success: function (data) {
                     if (data.length > 0) {
                         $('#geenLiedje').hide();
