@@ -112,7 +112,6 @@ class LiedjesController extends Controller
         ]);
 
 
-
         if ($programma->user_id == auth()->user()->id) {
             $liedje->update([
                 'programma_id' => request('programma'),
@@ -136,11 +135,15 @@ class LiedjesController extends Controller
     public function destroy($id)
     {
         $liedje = Liedje::find($id);
-        if (auth()->user()->id == $liedje->user_id) {
-            $liedje->delete();
-            return back()->with('success', 'Liedje verwijderd');
+        if ($liedje != null) {
+            if (auth()->user()->id == $liedje->user_id) {
+                $liedje->delete();
+                return back()->with('success', 'Liedje verwijderd');
+            } else {
+                abort('403');
+            }
         } else {
-            abort('403');
+            abort('404');
         }
     }
 }

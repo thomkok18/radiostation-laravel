@@ -44,7 +44,7 @@ class ProgrammaController extends Controller
             'naam' => 'required',
             'starttijd' => 'required|before_or_equal:eindtijd',
             'eindtijd' => 'required|after_or_equal:starttijd',
-            'datum' => 'required|date'
+            'datum' => 'required|date_format:Y-m-d'
         ]);
 
         $programma->create([
@@ -100,7 +100,7 @@ class ProgrammaController extends Controller
             'naam' => 'required',
             'starttijd' => 'required|before_or_equal:eindtijd',
             'eindtijd' => 'required|after_or_equal:starttijd',
-            'datum' => 'required|date'
+            'datum' => 'required|date_format:Y-m-d'
         ]);
 
         $programma->update([
@@ -122,11 +122,15 @@ class ProgrammaController extends Controller
     public function destroy($id)
     {
         $programma = Programma::find($id);
-        if (auth()->user()->id == $programma->user_id) {
-            $programma->delete();
-            return back()->with('success', 'Programma verwijderd');
+        if ($programma != null) {
+            if (auth()->user()->id == $programma->user_id) {
+                $programma->delete();
+                return back()->with('success', 'Programma verwijderd');
+            } else {
+                abort('403');
+            }
         } else {
-            abort('403');
+            abort('404');
         }
     }
 }

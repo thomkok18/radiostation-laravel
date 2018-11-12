@@ -91,11 +91,15 @@
                             "<td>" + value.artiestnaam + "</td>" +
                             "<td>" + value.lengte + "</td>" +
                             @auth
+                                @if(auth()->user()->id == $programma->user_id)
                                 "<th><a class=\"edit\" href=\'/edit/liedje/" + value.id + "\'>✎</a></th>" +
                             "<th>" +
                             "<input class=\"prullenbak\" type=\"image\" src=\"/img/prullenbak/prullenbakOpen.jpg\" aria-hidden=\"true\" data-toggle=\"modal\" data-target=\"#destroyLiedjeModal\">\n" +
                             "</th>" +
-                            @endauth
+                            @else
+                                "<th></th><th></th>" +
+                            @endif
+                                @endauth
                                 "</tr>");
                         document.getElementById("deleteSong").setAttribute('action', '/delete/liedje/' + value.id);
                     });

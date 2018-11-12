@@ -1,10 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Liedje;
 use App\Programma;
-use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -25,6 +22,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('welcome');
+        $programmas = Programma::all();
+        return view('welcome', compact('programmas'));
     }
 }
