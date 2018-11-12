@@ -36,9 +36,7 @@ Route::put('/update/liedje/{liedje}', 'LiedjesController@update');
 Route::delete('/delete/liedje/{liedje}', 'LiedjesController@destroy');
 
 Route::get('/searchPrograms/', function() {
-    $programma = DB::table('programmas')
-        ->where('user_id', '=', auth()->user()->id)
-        ->orWhere('naam', 'like', '%'.$_GET['search'].'%')
+    $programma = Programma::where('naam', 'like', '%'.$_GET['search'].'%')
         ->orWhere('starttijd', 'like', '%'.$_GET['search'].'%')
         ->orWhere('eindtijd', 'like', '%'.$_GET['search'].'%')
         ->orWhere('datum', 'like', '%'.$_GET['search'].'%')
