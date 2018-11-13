@@ -48,9 +48,11 @@ Route::get('/searchPrograms/', function() {
 Route::get('/searchSongs/', function() {
     $liedje = DB::table('liedjes')
         ->where('programma_id', '=', $_GET['program_id'])
-        ->orWhere('liedjenaam', 'like', $_GET['search'])
-        ->orWhere('lengte', 'like', $_GET['search'])
-        ->orWhere('artiestnaam', 'like', $_GET['search'])
+        ->where(function ($query) {
+            $query->where('liedjenaam', 'like', '%'.$_GET['search'].'%')
+                ->orWhere('lengte', 'like', '%'.$_GET['search'].'%')
+                ->orWhere('artiestnaam', 'like', '%'.$_GET['search'].'%');
+        })
         ->get();
 
     return $liedje;

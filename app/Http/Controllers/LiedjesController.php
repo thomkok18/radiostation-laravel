@@ -8,6 +8,15 @@ use Illuminate\Http\Request;
 
 class LiedjesController extends Controller
 {
+
+    /**
+     * LiedjesController constructor.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' =>['index', 'show']]);
+    }
+
     /**
      * Display a listing of the resource.
      *

@@ -46,7 +46,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
-                    <form id="deleteSong" action="/delete/liedje" method="POST">
+                    <form id="deleteSong" action="/delete/liedje/" method="POST">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-primary">Verwijderen</button>
@@ -58,12 +58,10 @@
     </div>
 
     <script>
-        $(function () {
-            $('.prullenbak').click(function () {
-                $('#deleteSong').attr('action', '/delete/liedje/' + $(this).attr('song-id'));
-                $('#liedjeNaam').text('Weet u zeker dat u ' + $(this).attr('song-name') + ' wilt verwijderen?');
-            });
-        });
+        function prullenbak(liedje_id, liedje_naam) {
+            document.getElementById('deleteSong').setAttribute('action', '/delete/liedje/' + liedje_id);
+            document.getElementById('liedjeNaam').innerText = 'Weet u zeker dat u ' + liedje_naam + ' wilt verwijderen?';
+        }
 
         $(function () {
             searchSongs();
@@ -87,21 +85,18 @@
 
                     $('#liedjes').html('');
                     $.each(data, function (index, value) {
-                        $('#liedjes').append("<tr><th>" + value.liedjenaam + "</th>" +
+                        var values = "<tr><th>" + value.liedjenaam + "</th>" +
                             "<td>" + value.artiestnaam + "</td>" +
-                            "<td>" + value.lengte + "</td>" +
-                            @auth
-                                @if(auth()->user()->id == $programma->user_id)
-                                "<th><a class=\"edit\" href=\'/edit/liedje/" + value.id + "\'>✎</a></th>" +
+                            "<td>" + value.lengte + "</td>";
+
+                        var buttons = "<th><a class=\"edit\" href=\'/edit/liedje/" + value.id + "\'>✎</a></th>" +
                             "<th>" +
-                            "<input class=\"prullenbak\" type=\"image\" src=\"/img/prullenbak/prullenbakOpen.jpg\" aria-hidden=\"true\" data-toggle=\"modal\" data-target=\"#destroyLiedjeModal\">\n" +
-                            "</th>" +
-                            @else
-                                "<th></th><th></th>" +
-                            @endif
-                                @endauth
-                                "</tr>");
-                        document.getElementById("deleteSong").setAttribute('action', '/delete/liedje/' + value.id);
+                            "<input onclick=\"prullenbak(" + value.id + ",'" + value.liedjenaam + "')\" class=\"prullenbak\" type=\"image\" src=\"/img/prullenbak/prullenbakOpen.jpg\" aria-hidden=\"true\" data-toggle=\"modal\" data-target=\"#destroyLiedjeModal\">\n" +
+                            "</th>";
+
+                        var closeRow = "</tr>";
+
+                        $('#liedjes').append(values + buttons + closeRow);
                     });
                 }
             });

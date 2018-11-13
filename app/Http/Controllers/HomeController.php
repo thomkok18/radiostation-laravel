@@ -23,6 +23,14 @@ class HomeController extends Controller
     public function index()
     {
         $programmas = Programma::all();
-        return view('welcome', compact('programmas'));
+
+        if (auth()->user() != null) {
+            $user_id = auth()->user()->id;
+        } else {
+            $user_id = '';
+        }
+
+
+        return view('welcome', compact('programmas', 'user_id'));
     }
 }

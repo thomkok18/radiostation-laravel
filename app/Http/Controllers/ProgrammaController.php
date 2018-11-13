@@ -10,6 +10,15 @@ use Illuminate\Support\Facades\DB;
 
 class ProgrammaController extends Controller
 {
+
+    /**
+     * ProgrammaController constructor.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => ['index', 'show']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -103,12 +112,16 @@ class ProgrammaController extends Controller
             'datum' => 'required|date_format:Y-m-d'
         ]);
 
-        $programma->update([
-            'naam' => request('naam'),
-            'starttijd' => request('starttijd'),
-            'eindtijd' => request('eindtijd'),
-            'datum' => request('datum'),
-        ]);
+        if (auth()->user()->id == $programma->user_id) {
+            $programma->update([
+                'naam' => request('naam'),
+                'starttijd' => request('starttijd'),
+                'eindtijd' => request('eindtijd'),
+                'datum' => request('datum'),
+            ]);
+        } else {
+            abort('403');
+        }
 
         return redirect('/')->with('success', 'Programma aangepast');
     }
