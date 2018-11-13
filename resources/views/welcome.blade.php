@@ -85,7 +85,7 @@
 
                     $('#programmas').html('');
                     $.each(data, function (index, value) {
-                        var user_id = '<?= $user_id; ?>';
+                        var user_id = parseInt('<?= $user_id; ?>');
                         var buttons = '';
 
                         var values = "<tr><th><a href='programma/" + value.id + "'>" + value.naam + "</a></th>" +
@@ -93,7 +93,7 @@
                             "<td>" + value.eindtijd + "</td>" +
                             "<td>" + value.datum + "</td>";
 
-                        if (user_id == value.user_id) {
+                        if (user_id === value.user_id) {
                                 @auth
                                     buttons = "<th><a class=\"edit\" href=\'/edit/programma/" + value.id + "\'>✎</a></th>" +
                                 "<th>" +
