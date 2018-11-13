@@ -70,6 +70,7 @@
         function searchSongs() {
             var search = $('#liedjeInput').val();
             var program_id = '<?= request('id'); ?>';
+            var buttons = '';
 
             $.ajax({
                 url: "/searchSongs/",
@@ -89,10 +90,12 @@
                             "<td>" + value.artiestnaam + "</td>" +
                             "<td>" + value.lengte + "</td>";
 
-                        var buttons = "<th><a class=\"edit\" href=\'/edit/liedje/" + value.id + "\'>✎</a></th>" +
+                        @auth
+                        buttons = "<th><a class=\"edit\" href=\'/edit/liedje/" + value.id + "\'>✎</a></th>" +
                             "<th>" +
                             "<input onclick=\"prullenbak(" + value.id + ",'" + value.liedjenaam + "')\" class=\"prullenbak\" type=\"image\" src=\"/img/prullenbak/prullenbakOpen.jpg\" aria-hidden=\"true\" data-toggle=\"modal\" data-target=\"#destroyLiedjeModal\">\n" +
                             "</th>";
+                        @endauth
 
                         var closeRow = "</tr>";
 
