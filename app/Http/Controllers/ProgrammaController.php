@@ -75,9 +75,15 @@ class ProgrammaController extends Controller
      */
     public function show($id)
     {
+        if (auth()->user() != null) {
+            $user_id = auth()->user()->id;
+        } else {
+            $user_id = '';
+        }
+
         $programma = Programma::find($id);
         $liedjes = DB::table('liedjes')->where('programma_id', $id)->get();
-        return view('pages/liedjesoverzicht', compact('programma', 'liedjes'));
+        return view('pages/liedjesoverzicht', compact('programma', 'liedjes', 'user_id'));
     }
 
     /**

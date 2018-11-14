@@ -86,16 +86,22 @@
 
                     $('#liedjes').html('');
                     $.each(data, function (index, value) {
+                        var user_id = parseInt('<?= $user_id; ?>');
+
                         var values = "<tr><th>" + value.liedjenaam + "</th>" +
                             "<td>" + value.artiestnaam + "</td>" +
                             "<td>" + value.lengte + "</td>";
 
-                        @auth
-                        buttons = "<th><a class=\"edit\" href=\'/edit/liedje/" + value.id + "\'>✎</a></th>" +
-                            "<th>" +
-                            "<input onclick=\"prullenbak(" + value.id + ",'" + value.liedjenaam + "')\" class=\"prullenbak\" type=\"image\" src=\"/img/prullenbak/prullenbakOpen.jpg\" aria-hidden=\"true\" data-toggle=\"modal\" data-target=\"#destroyLiedjeModal\">\n" +
-                            "</th>";
-                        @endauth
+                        if (user_id === value.user_id) {
+                            @auth
+                                buttons = "<th><a class=\"edit\" href=\'/edit/liedje/" + value.id + "\'>✎</a></th>" +
+                                "<th>" +
+                                "<input onclick=\"prullenbak(" + value.id + ",'" + value.liedjenaam + "')\" class=\"prullenbak\" type=\"image\" src=\"/img/prullenbak/prullenbakOpen.jpg\" aria-hidden=\"true\" data-toggle=\"modal\" data-target=\"#destroyLiedjeModal\">\n" +
+                                "</th>";
+                            @endauth
+                        } else {
+                            buttons = "<th></th><th></th>";
+                        }
 
                         var closeRow = "</tr>";
 
