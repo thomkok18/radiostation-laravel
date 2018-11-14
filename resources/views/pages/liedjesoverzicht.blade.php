@@ -100,7 +100,9 @@
                                 "</th>";
                             @endauth
                         } else {
-                            buttons = "<th></th><th></th>";
+                            @auth
+                                buttons = "<th></th><th></th>";
+                            @endauth
                         }
 
                         var closeRow = "</tr>";
