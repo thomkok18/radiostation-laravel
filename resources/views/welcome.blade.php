@@ -97,7 +97,7 @@
                                 @auth
                                     buttons = "<th><a class=\"edit\" href=\'/edit/programma/" + value.id + "\'>✎</a></th>" +
                                 "<th>" +
-                                "<input onclick=\"prullenbak(" + value.id + ",'" + value.naam + "')\" class=\"prullenbak\" type=\"image\" src=\"/img/prullenbak/prullenbakOpen.jpg\" aria-hidden=\"true\" data-toggle=\"modal\" data-target=\"#destroyProgrammaModal\">\n" +
+                                "<input onclick=\"prullenbak(" + value.id + "," + value.naam + ")\" class=\"prullenbak\" type=\"image\" src=\"/img/prullenbak/prullenbakOpen.jpg\" aria-hidden=\"true\" data-toggle=\"modal\" data-target=\"#destroyProgrammaModal\">\n" +
                                 "</th>";
                             @endauth
                         } else {
